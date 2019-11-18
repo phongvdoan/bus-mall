@@ -1,0 +1,39 @@
+*{
+  margin: .5em;
+  box-sizing: border-box;
+}
+header {
+  height: 85px;
+  margin: 15px 0;
+}
+
+header img {
+  float: left;
+  margin: 0 1em 0 2.5em;
+}
+
+header h1 {
+  font-size: 2em;
+  position: relative;
+  top: .5em;
+}
+
+main #vote-results {
+  height: 500px;
+  width: 230px;
+  margin: 8px 30px;
+  float: left;
+  border: 2px solid black;
+}
+
+main #image-choices {
+  display:inline-block;
+  border: 2px solid green;
+}
+main section img {
+  margin: 10px 20px 50px 20px;
+}
+
+main section p {
+  margin-top: 60px;
+}
