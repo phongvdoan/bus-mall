@@ -152,7 +152,8 @@ function clickHandler(event) {
     generateImages();
     listCickResult();
   } else {
-    imgChoice.innerHTML.html = '';
+    imgChoice.removeEventListener('click', clickHandler);
+    barChartResults();
 
   }
 
@@ -163,4 +164,57 @@ function clickHandler(event) {
 }
 generateImages();
 listCickResult();
-console.log('Selectproduct :', Selectproduct.all);
+
+
+function barChartResults() {
+  imgChoice.innerHTML = '';
+
+  var productName = [];
+  var productVoteTotal = [];
+
+  for (var i = 0; i < Selectproduct.all.length; i++) {
+    var singleProductName = Selectproduct.all[i].name;
+    productName.push(singleProductName);
+    var singleProductVoteTotal = Selectproduct.all[i].clickCtr;
+    productVoteTotal.push(singleProductVoteTotal);
+  }
+
+  var barChart = addElement('CANVAS', imgChoice);
+  barChart.setAttribute('id', 'productChart');
+
+
+  var ctx = document.getElementById('productChart').getContext('2d');
+  // eslint-disable-next-line no-undef, no-unused-vars
+  var productChart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: productName,
+      datasets: [{
+        label: 'Product Votes',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: productVoteTotal,
+      }]
+    },
+
+    // Configuration options go here
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      layout: {
+        width: 800,
+        padding: 50
+
+      }
+    }
+  });
+}
+
