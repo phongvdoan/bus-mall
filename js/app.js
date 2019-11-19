@@ -145,10 +145,17 @@ function clickHandler(event) {
   // firstImgElem.src = '';
   // secImgElem.src = '';
   // thirdImgElem.src = '';
-  imgGenerator = [];
-  resultList.innerHTML = '';
-  generateImages();
-  listCickResult();
+  Selectproduct.maxVote--;
+  if (Selectproduct.maxVote >= 0) {
+    imgGenerator = [];
+    resultList.innerHTML = '';
+    generateImages();
+    listCickResult();
+  } else {
+    imgChoice.innerHTML.html = '';
+
+  }
+
 
 
   // function votingResults() {
