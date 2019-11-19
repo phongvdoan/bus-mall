@@ -37,3 +37,20 @@ main section img {
 main section p {
   margin-top: 60px;
 }
+
+#image-choices img {
+  height: 100px;
+  width: 100px;
+}
+
+figure {
+  display: inline-block;
+}
+
+#first {
+  float: left
+}
+
+img {
+  border: 1px solid black;
+}
