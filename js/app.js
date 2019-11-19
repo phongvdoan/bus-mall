@@ -172,7 +172,7 @@ function barChartResults() {
   var productName = [];
   var productVoteTotal = [];
 
-  for (var i= 0; i < Selectproduct.all.length; i++) {
+  for (var i = 0; i < Selectproduct.all.length; i++) {
     var singleProductName = Selectproduct.all[i].name;
     productName.push(singleProductName);
     var singleProductVoteTotal = Selectproduct.all[i].clickCtr;
@@ -209,7 +209,11 @@ function barChartResults() {
           }
         }]
       },
-     
+      layout: {
+        width: 800,
+        padding: 50
+
+      }
     }
   });
 }
