@@ -55,12 +55,12 @@ Selectproduct.maxVote = 25;
 //check for previous localStorage for data
 
 
-function saveStatsToLocalStorage(dataSet) {
+function saveStatsToLocalStorage(data) {
   var productStats = [];
-  for (var i = 0; i < dataSet.length; i++) {
-    productStats.push(dataSet[i]);
+  for (var i = 0; i < data.length; i++) {
+    productStats.push(data[i]);
   }
-  console.log(JSON.stringify(productStats));
+  // console.log(JSON.stringify(productStats));
   localStorage.productStats = JSON.stringify(productStats);
 }
 
