@@ -52,28 +52,19 @@ new Selectproduct('wine-glass', 'img/wine-glass.jpg');
 Selectproduct.voteCTR = 0;
 Selectproduct.maxVote = 25;
 
+//check for previous localStorage for data
 
 
-//funtion to create random images
-// var randomImgGenerator = function (max) {
-//   // var imgSelection = new Set();
-//   var randomUniqueValue = [];
-//   for (var i = 0; i < 3; i++) {
-//     randomUniqueValue.push(Math.floor(Math.random() * max));
-//     //console.log('randomUniqueValue :', randomUniqueValue);
-//     if (randomUniqueValue[i] === randomUniqueValue[(i + 1)] || randomUniqueValue[i] === randomUniqueValue[(i - 1)]) {
-//       randomUniqueValue.pop();
-//       i -= 1;
-//       //console.log('randomUniqueValue :', randomUniqueValue);
-//     }
-//     for (var j = 0; j < randomUniqueValue.length; j++) {
-//       var imgLocation = ['firstImg', 'secImg', 'thirdImg'];
-//       document.getElementById(imgLocation[j]).src = Selectproduct.all[randomUniqueValue[j]].imgURL;
-//     }
-//   }
-//   console.log('randomUniqueValue :', randomUniqueValue);
+function saveStatsToLocalStorage(dataSet) {
+  var productStats = [];
+  for (var i = 0; i < dataSet.length; i++) {
+    productStats.push(dataSet[i]);
+  }
+  console.log(JSON.stringify(productStats));
+  localStorage.productStats = JSON.stringify(productStats);
+}
 
-// };
+
 
 function shuffle(array) {
   var currentIndex = array.length, tempValue, randomIndex;
@@ -157,6 +148,7 @@ function clickHandler(event) {
     // listCickResult();
     console.log('randomArr :', randomArr);
   } else {
+    saveStatsToLocalStorage(Selectproduct.all);
     firstImgElem.removeEventListener('click', clickHandler);
     secImgElem.removeEventListener('click', clickHandler);
     thirdImgElem.removeEventListener('click', clickHandler);
@@ -164,13 +156,17 @@ function clickHandler(event) {
 
   }
 
-
-
-  // function votingResults() {
-
 }
-generateImages();
-// listCickResult();
+
+console.log('localStorage.getItem(\'productStats\') :', localStorage.getItem('productStats'));
+// eslint-disable-next-line valid-typeof
+if (localStorage.getItem('productStats') === null) {
+  generateImages();
+} else {
+  Selectproduct.all = JSON.parse(localStorage.productStats);
+  barChartResults();
+}
+
 
 
 function barChartResults() {
