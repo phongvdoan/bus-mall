@@ -149,13 +149,17 @@ function clickHandler(event) {
     console.log('randomArr :', randomArr);
   } else {
     saveStatsToLocalStorage(Selectproduct.all);
-    firstImgElem.removeEventListener('click', clickHandler);
-    secImgElem.removeEventListener('click', clickHandler);
-    thirdImgElem.removeEventListener('click', clickHandler);
-    barChartResults();
+    endResults();
 
   }
 
+}
+
+function endResults(){
+  firstImgElem.removeEventListener('click', clickHandler);
+  secImgElem.removeEventListener('click', clickHandler);
+  thirdImgElem.removeEventListener('click', clickHandler);
+  barChartResults();
 }
 
 console.log('localStorage.getItem(\'productStats\') :', localStorage.getItem('productStats'));
@@ -164,7 +168,7 @@ if (localStorage.getItem('productStats') === null) {
   generateImages();
 } else {
   Selectproduct.all = JSON.parse(localStorage.productStats);
-  barChartResults();
+  endResults();
 }
 
 
