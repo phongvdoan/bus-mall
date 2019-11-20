@@ -125,7 +125,9 @@ function listCickResult() {
 }
 
 
-imgChoice.addEventListener('click', clickHandler);
+firstImgElem.addEventListener('click', clickHandler);
+secImgElem.addEventListener('click', clickHandler);
+thirdImgElem.addEventListener('click', clickHandler);
 
 
 function clickHandler(event) {
