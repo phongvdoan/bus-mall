@@ -91,6 +91,7 @@ function shuffle(array) {
 function getRandomImg() {
   if (randomArr.length === 0) {
     randomArr = shuffle(Selectproduct.all.slice());
+    console.log('Shuffled');
   }
   var arrPop = randomArr.pop();
   // console.log('arrPop :', arrPop);
@@ -112,17 +113,17 @@ function addElement(tag, container, text) {
   element.textContent = text;
   return element;
 }
-var resultList = document.getElementById('resultList');
+// var resultList = document.getElementById('resultList');
 
 
-function listCickResult() {
-  var text = '';
+// function listCickResult() {
+//   var text = '';
 
-  for (var i = 0; i < Selectproduct.all.length; i++) {
-    text = `${Selectproduct.all[i].name} : ${Selectproduct.all[i].clickCtr} votes.`;
-    addElement('li', resultList, text);
-  }
-}
+//   for (var i = 0; i < Selectproduct.all.length; i++) {
+//     text = `${Selectproduct.all[i].name} : ${Selectproduct.all[i].clickCtr} votes.`;
+//     addElement('li', resultList, text);
+//   }
+// }
 
 
 firstImgElem.addEventListener('click', clickHandler);
@@ -151,11 +152,14 @@ function clickHandler(event) {
   Selectproduct.maxVote--;
   if (Selectproduct.maxVote >= 0) {
     imgGenerator = [];
-    resultList.innerHTML = '';
+    // resultList.innerHTML = '';
     generateImages();
-    listCickResult();
+    // listCickResult();
+    console.log('randomArr :', randomArr);
   } else {
-    imgChoice.removeEventListener('click', clickHandler);
+    firstImgElem.removeEventListener('click', clickHandler);
+    secImgElem.removeEventListener('click', clickHandler);
+    thirdImgElem.removeEventListener('click', clickHandler);
     barChartResults();
 
   }
@@ -166,7 +170,7 @@ function clickHandler(event) {
 
 }
 generateImages();
-listCickResult();
+// listCickResult();
 
 
 function barChartResults() {
@@ -201,13 +205,12 @@ function barChartResults() {
       labels: productName,
       datasets: [{
         label: 'Votes',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'orange',
         data: productVoteTotal
       },
       {
         label: 'Times Shown',
-        backgroundColor: 'green',
+        backgroundColor: 'blue',
         data: productShownTotal
       }]
     },
