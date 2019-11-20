@@ -39,8 +39,8 @@ main section p {
 }
 
 #image-choices img {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 250px;
 }
 
 figure {
@@ -55,6 +55,6 @@ img {
   border: 1px solid black;
 }
 
-#productChart {
-  width: 500px;
+canvas {
+  width: 800px;
 }
