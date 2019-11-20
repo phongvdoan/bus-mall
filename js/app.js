@@ -102,6 +102,7 @@ function generateImages() {
     imgGenerator.push(getRandomImg());
     imgElem[i].src = imgGenerator[i].imgURL;
     imgNameElem[i].textContent = imgGenerator[i].name;
+    imgGenerator[i].shownCtr++;
   }
 }
 
@@ -171,12 +172,16 @@ function barChartResults() {
 
   var productName = [];
   var productVoteTotal = [];
+  var productShownTotal = [];
 
   for (var i = 0; i < Selectproduct.all.length; i++) {
     var singleProductName = Selectproduct.all[i].name;
     productName.push(singleProductName);
     var singleProductVoteTotal = Selectproduct.all[i].clickCtr;
     productVoteTotal.push(singleProductVoteTotal);
+    var singleProductShownTotal = Selectproduct.all[i].shownCtr;
+    productShownTotal.push(singleProductShownTotal);
+
   }
 
   var barChart = addElement('CANVAS', imgChoice);
@@ -193,10 +198,15 @@ function barChartResults() {
     data: {
       labels: productName,
       datasets: [{
-        label: 'Product Votes',
+        label: 'Votes',
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(255, 99, 132)',
-        data: productVoteTotal,
+        data: productVoteTotal
+      },
+      {
+        label: 'Times Shown',
+        backgroundColor: 'green',
+        data: productShownTotal
       }]
     },
 
@@ -210,9 +220,7 @@ function barChartResults() {
         }]
       },
       layout: {
-        width: 800,
-        padding: 50
-
+        width: 800
       }
     }
   });
