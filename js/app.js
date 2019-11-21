@@ -7,65 +7,70 @@ var firstNameElem = document.getElementById('firstImgName');
 var secNameElem = document.getElementById('secImgName');
 var thirdNameElem = document.getElementById('thirdImgName');
 var imgChoice = document.getElementById('image-choices');
-var imgElem = [];
-imgElem.push(firstImgElem, secImgElem, thirdImgElem);
-var imgNameElem = [];
-imgNameElem.push(firstNameElem, secNameElem, thirdNameElem);
-// console.log('imgElem :', imgElem);
+var imgElem = [firstImgElem, secImgElem, thirdImgElem];
+var imgNameElem = [firstNameElem, secNameElem, thirdNameElem];
 var imgGenerator = [];
 var randomArr = [];
-
 //contructor
-function Selectproduct(name, imgURL) {
+function Selectproduct(name, imgURL, clickCtr = 0, shownCtr = 0) {
   this.name = name;
   this.imgURL = imgURL;
-  this.clickCtr = 0;
-  this.shownCtr = 0;
+  this.clickCtr = clickCtr;
+  this.shownCtr = shownCtr;
 
   Selectproduct.all.push(this);
 }
 
-//add to contructor
+//Properties of Selectproduct constructor
 Selectproduct.all = [];
-new Selectproduct('bag', 'img/bag.jpg');
-new Selectproduct('banana', 'img/banana.jpg');
-new Selectproduct('bathroom', 'img/bathroom.jpg');
-new Selectproduct('boots', 'img/boots.jpg');
-new Selectproduct('breakfast', 'img/breakfast.jpg');
-new Selectproduct('bubblegum', 'img/bubblegum.jpg');
-new Selectproduct('chair', 'img/chair.jpg');
-new Selectproduct('cthulhu', 'img/cthulhu.jpg');
-new Selectproduct('dog-duck', 'img/dog-duck.jpg');
-new Selectproduct('dragon', 'img/dragon.jpg');
-new Selectproduct('pen', 'img/pen.jpg');
-new Selectproduct('pet-sweep', 'img/pet-sweep.jpg');
-new Selectproduct('scissors', 'img/scissors.jpg');
-new Selectproduct('shark', 'img/shark.jpg');
-new Selectproduct('sweep', 'img/sweep.png');
-new Selectproduct('tauntaun', 'img/tauntaun.jpg');
-new Selectproduct('unicorn', 'img/unicorn.jpg');
-new Selectproduct('usb', 'img/usb.gif');
-new Selectproduct('water-can', 'img/water-can.jpg');
-new Selectproduct('wine-glass', 'img/wine-glass.jpg');
-
 //contructor properties for counter
 Selectproduct.voteCTR = 0;
 Selectproduct.maxVote = 25;
 
+//Renders App
+function startApp() {
+  console.log('localStorage.getItem(\'productStats\') :', localStorage.getItem('productStats'));
+  // eslint-disable-next-line valid-typeof
+  if (localStorage.getItem('productStats') === null) {
+    new Selectproduct('bag', 'img/bag.jpg');
+    new Selectproduct('banana', 'img/banana.jpg');
+    new Selectproduct('bathroom', 'img/bathroom.jpg');
+    new Selectproduct('boots', 'img/boots.jpg');
+    new Selectproduct('breakfast', 'img/breakfast.jpg');
+    new Selectproduct('bubblegum', 'img/bubblegum.jpg');
+    new Selectproduct('chair', 'img/chair.jpg');
+    new Selectproduct('cthulhu', 'img/cthulhu.jpg');
+    new Selectproduct('dog-duck', 'img/dog-duck.jpg');
+    new Selectproduct('dragon', 'img/dragon.jpg');
+    new Selectproduct('pen', 'img/pen.jpg');
+    new Selectproduct('pet-sweep', 'img/pet-sweep.jpg');
+    new Selectproduct('scissors', 'img/scissors.jpg');
+    new Selectproduct('shark', 'img/shark.jpg');
+    new Selectproduct('sweep', 'img/sweep.png');
+    new Selectproduct('tauntaun', 'img/tauntaun.jpg');
+    new Selectproduct('unicorn', 'img/unicorn.jpg');
+    new Selectproduct('usb', 'img/usb.gif');
+    new Selectproduct('water-can', 'img/water-can.jpg');
+    new Selectproduct('wine-glass', 'img/wine-glass.jpg');
+
+    generateImages();
+  } else {
+    var pulledData = JSON.parse(localStorage.productStats);
+    for ( var i = 0; i < pulledData.length; i++){
+      new Selectproduct(pulledData[i].name, pulledData[i].imgURL, pulledData[i].clickCtr, pulledData[i].shownCtr);
+    }
+    endResults();
+  }
+}
 //check for previous localStorage for data
-
-
 function saveStatsToLocalStorage(data) {
   var productStats = [];
   for (var i = 0; i < data.length; i++) {
     productStats.push(data[i]);
   }
-  // console.log(JSON.stringify(productStats));
   localStorage.productStats = JSON.stringify(productStats);
 }
-
-
-
+//Shuffles an array
 function shuffle(array) {
   var currentIndex = array.length, tempValue, randomIndex;
   while (0 !== currentIndex) {
@@ -78,50 +83,30 @@ function shuffle(array) {
   return array;
 
 }
-
-function getRandomImg() {
+//Gets last index in a shuffled copied array
+function getLastIndex() {
   if (randomArr.length === 0) {
     randomArr = shuffle(Selectproduct.all.slice());
-    console.log('Shuffled');
   }
   var arrPop = randomArr.pop();
-  // console.log('arrPop :', arrPop);
   return arrPop;
 }
-
+//takes the last three indexes from shuffled arrray and generating images
 function generateImages() {
   for (var i = 0; i < 3; i++) {
-    imgGenerator.push(getRandomImg());
+    imgGenerator.push(getLastIndex());
     imgElem[i].src = imgGenerator[i].imgURL;
     imgNameElem[i].textContent = imgGenerator[i].name;
     imgGenerator[i].shownCtr++;
   }
 }
-
+//
 function addElement(tag, container, text) {
   var element = document.createElement(tag);
   container.appendChild(element);
   element.textContent = text;
   return element;
 }
-// var resultList = document.getElementById('resultList');
-
-
-// function listCickResult() {
-//   var text = '';
-
-//   for (var i = 0; i < Selectproduct.all.length; i++) {
-//     text = `${Selectproduct.all[i].name} : ${Selectproduct.all[i].clickCtr} votes.`;
-//     addElement('li', resultList, text);
-//   }
-// }
-
-
-firstImgElem.addEventListener('click', clickHandler);
-secImgElem.addEventListener('click', clickHandler);
-thirdImgElem.addEventListener('click', clickHandler);
-
-
 function clickHandler(event) {
   var id = event.target.id;
   console.log('id :', id);
@@ -135,17 +120,10 @@ function clickHandler(event) {
     imgGenerator[2].clickCtr++;
     console.log('imgGenerator[2].clickCtr :', imgGenerator[2].clickCtr);
   }
-
-  console.log('Selectproduct :', Selectproduct.all);
-  // firstImgElem.src = '';
-  // secImgElem.src = '';
-  // thirdImgElem.src = '';
   Selectproduct.maxVote--;
   if (Selectproduct.maxVote >= 0) {
     imgGenerator = [];
-    // resultList.innerHTML = '';
     generateImages();
-    // listCickResult();
     console.log('randomArr :', randomArr);
   } else {
     saveStatsToLocalStorage(Selectproduct.all);
@@ -155,23 +133,12 @@ function clickHandler(event) {
 
 }
 
-function endResults(){
+function endResults() {
   firstImgElem.removeEventListener('click', clickHandler);
   secImgElem.removeEventListener('click', clickHandler);
   thirdImgElem.removeEventListener('click', clickHandler);
   barChartResults();
 }
-
-console.log('localStorage.getItem(\'productStats\') :', localStorage.getItem('productStats'));
-// eslint-disable-next-line valid-typeof
-if (localStorage.getItem('productStats') === null) {
-  generateImages();
-} else {
-  Selectproduct.all = JSON.parse(localStorage.productStats);
-  endResults();
-}
-
-
 
 function barChartResults() {
   imgChoice.innerHTML = '';
@@ -197,10 +164,7 @@ function barChartResults() {
   var ctx = document.getElementById('productChart').getContext('2d');
   // eslint-disable-next-line no-undef, no-unused-vars
   var productChart = new Chart(ctx, {
-    // The type of chart we want to create
     type: 'bar',
-
-    // The data for our dataset
     data: {
       labels: productName,
       datasets: [{
@@ -224,10 +188,16 @@ function barChartResults() {
           }
         }]
       },
+      responsive: false,
       layout: {
         width: 800
       }
     }
   });
 }
+
+startApp();
+firstImgElem.addEventListener('click', clickHandler);
+secImgElem.addEventListener('click', clickHandler);
+thirdImgElem.addEventListener('click', clickHandler);
 
